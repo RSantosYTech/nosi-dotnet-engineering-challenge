@@ -22,7 +22,10 @@ public class ContentInput
             Duration,
             StartTime,
             EndTime,
-            new List<string>()
+
+            //Changing below for compatibiity with new SQL Server and EF changes
+            //new List<string>()
+            new List<ContentGenre>()
         );
     }
 }

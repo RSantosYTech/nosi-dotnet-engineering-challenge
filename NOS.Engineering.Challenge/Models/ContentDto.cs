@@ -1,5 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace NOS.Engineering.Challenge.Models;
 
+//Adding NotMapped annotation as this class is meant for use in data operations in server side only.
+[NotMapped]
 public class ContentDto
 {
     public ContentDto(
@@ -10,7 +14,10 @@ public class ContentDto
         int? duration,
         DateTime? startTime,
         DateTime? endTime,
-        IEnumerable<string> genreList)
+
+        //Changing this for compatibily with EF implementation changes.
+        ICollection<ContentGenre> genreList)
+        //IEnumerable<string> genreList)
     {
         Title = title;
         SubTitle = subTitle;
@@ -19,7 +26,8 @@ public class ContentDto
         Duration = duration;
         StartTime = startTime;
         EndTime = endTime;
-        GenreList = genreList;
+        //
+        GenreList = genreList.ToList();
     }
 
     public string? Title { get; set; }
@@ -29,6 +37,9 @@ public class ContentDto
     public int? Duration { get; set; }
     public DateTime? StartTime { get; set; }
     public DateTime? EndTime { get; set; }
-    public IEnumerable<string> GenreList { get; set; }
+
+    //Changing this property to now use 'ContentGenres' class in the IEnumerable, for Entity Framework when converting to SQL Server usage.
+    public List<ContentGenre> GenreList { get; set; }
+    //public IEnumerable<string> GenreList { get; set; }
     
 }
